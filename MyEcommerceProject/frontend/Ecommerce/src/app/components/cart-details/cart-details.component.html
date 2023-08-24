@@ -1,0 +1,97 @@
+<div class="container-fluid pt-5 mt-5 pb-5 mb-4">
+  <div class="row justify-content-center">
+    <div *ngIf="cartItems.length > 0">
+      <div class="col">
+        <table class="table table-bordered table-striped">
+          <tr class="table-primary">
+            <th>Sno.</th>
+            <th>Product Image</th>
+            <th>Product Detail</th>
+            <th>Quantity</th>
+          </tr>
+          <tr *ngFor="let tempCartItem of cartItems; index as i">
+            <td>{{ i + 1 }}</td>
+            <td>
+              <img
+                src="{{ tempCartItem.imageUrl }}"
+                class="img-responsive"
+                width="150px"
+                alt=""
+              />
+            </td>
+            <td>
+              <p>{{ tempCartItem.name }}</p>
+              <p>{{ tempCartItem.price | currency : "INR" }}</p>
+            </td>
+            <td>
+              <div class="items">
+                <div class="row no-gutters">
+                  <div class="col">
+                    <button
+                      (click)="incrementQuantity(tempCartItem)"
+                      class="btn btn-primary btn-sm"
+                      style="background-color: #a8dadc"
+                    >
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                  <div class="col ml-4 mr-2">
+                    {{ tempCartItem.quantity }}
+                  </div>
+                  <div class="col">
+                    <button
+                      (click)="decrementQuantity(tempCartItem)"
+                      class="btn btn-primary btn-sm"
+                      style="background-color: #a8dadc"
+                    >
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                  <div class="col-8"></div>
+                </div>
+              </div>
+
+              <button
+                (click)="remove(tempCartItem)"
+                class="btn btn-danger btn-sm mt-2"
+                style="background-color: #a8dadc"
+              >
+                Remove
+              </button>
+
+              <p class="mt-2">
+                Subtotal:
+                {{
+                  tempCartItem.quantity * tempCartItem.price | currency : "INR"
+                }}
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3"></td>
+            <td style="font-weight: bold">
+              <p>Total Quantity: {{ totalQuantity }}</p>
+              <p>Total Price: {{ totalPrice | currency : "INR" }}</p>
+              <a
+                routerLink="/checkout"
+                class="btn btn-primary btn-sm"
+                style="background-color: #a8dadc"
+                >Check Out</a
+              >
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- if cart is empty then display a message -->
+    <div
+      *ngIf="cartItems.length == 0"
+      class="alert alert-warning col-md-12"
+      style=" background-color: #a8dadc;"
+      role="alert"
+    >
+      Shopping cart is empty.
+    </div>
+  </div>
+</div>
